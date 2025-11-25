@@ -1,20 +1,347 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Najah821 - Ana Sayfa</title>
+  <meta charset="UTF-8" />
+  <title>Najah821 – Projeler</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #020617;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --card: #020617ee;
+      --border: rgba(148, 163, 184, 0.2);
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #1e293b, #020617 55%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 960px;
+      background: linear-gradient(135deg, #020617, #020617dd);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 22px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Dekoratif blur daire */
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background: radial-gradient(circle at top right,
+        rgba(56, 189, 248, 0.18),
+        transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9 40%, #0369a1);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+    }
+
+    .brand-text h1 {
+      font-size: 1.25rem;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .tag {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--muted);
+      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.7);
+      white-space: nowrap;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .intro {
+      padding-right: 12px;
+    }
+
+    .intro h2 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .intro h3 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+
+    .intro p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .intro p + p {
+      margin-top: 8px;
+    }
+
+    .projects-card {
+      background: radial-gradient(circle at top left, var(--accent-soft), #020617f5);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 16px 16px 14px;
+    }
+
+    .projects-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 12px;
+    }
+
+    .projects-card-header h3 {
+      font-size: 1.05rem;
+    }
+
+    .projects-count {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .project-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .project-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--card);
+      border-radius: 14px;
+      padding: 12px 13px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.7);
+      transition: transform 0.18s ease, box-shadow 0.18s ease,
+        border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .project-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.9);
+      border-color: rgba(56, 189, 248, 0.75);
+      background: linear-gradient(135deg, #020617, rgba(15, 23, 42, 0.96));
+    }
+
+    .project-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .project-title {
+      font-weight: 600;
+      font-size: 0.98rem;
+    }
+
+    .project-pill {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.75);
+      color: var(--accent);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .project-desc {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.7);
+      display: inline-block;
+      margin: 0 4px;
+    }
+
+    footer {
+      margin-top: 18px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border-top: 1px solid rgba(148, 163, 184, 0.15);
+      padding-top: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        padding: 22px 16px 18px;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .intro h3 {
+        font-size: 1.42rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Najah821</h1>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <div class="brand-text">
+          <h1>Najah821</h1>
+          <span>Kişisel GitHub Pages ana sayfası</span>
+        </div>
+      </div>
 
-    <h2>Projeler</h2>
+      <div class="tag">
+        Basit · Temiz · Dersi anlatan portfolyo
+      </div>
+    </header>
 
-    <ul>
-        <li>
-            <a href="https://najah821.github.io/ileri-programlama-proje/">
-                İleri Programlama Projesi
-            </a>
-        </li>
-    </ul>
+    <main>
+      <section class="intro">
+        <h2>Hoş geldiniz</h2>
+        <h3>Projelerimi tek yerden topluyorum.</h3>
+        <p>
+          Bu sayfa, derslerde yaptığım ve zamanla geliştireceğim projeleri
+          kısaca göstermek için hazırlandı. Her proje için kısa bir açıklama
+          ve GitHub Pages bağlantısı bulunacak.
+        </p>
+        <p>
+          Şimdilik yalnızca <strong>İleri Programlama</strong> dersi projesi var;
+          ileride yeni projeler eklendikçe buradaki listeyi genişleteceğim.
+        </p>
+      </section>
+
+      <section class="projects-card" aria-labelledby="projects-title">
+        <div class="projects-card-header">
+          <h3 id="projects-title">Projeler</h3>
+          <span class="projects-count">1 aktif proje</span>
+        </div>
+
+        <div class="project-list">
+          <!-- İleri Programlama Projesi -->
+          <a class="project-link" href="/ileri-programlama-proje/">
+            <div class="project-title-row">
+              <span class="project-title">İleri Programlama Projesi</span>
+              <span class="project-pill">Ders Projesi</span>
+            </div>
+            <p class="project-desc">
+              Çok oyunculu tavla oyunu (Backgammon) projesi.
+              Java &amp; Swing ile geliştirilmiş, istemci–sunucu mimarisine
+              sahip bir uygulama.
+            </p>
+            <div class="project-meta">
+              <span>Java · Swing</span>
+              <span class="dot"></span>
+              <span>İleri Programlama dersi</span>
+              <span class="dot"></span>
+              <span>GitHub Pages üzerinden yayınlandı</span>
+            </div>
+          </a>
+
+          <!-- İleride yeni kartlar eklemek için burayı kopyalayıp düzenleyebilirsin -->
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© <span id="year"></span> Najah821</span>
+      <span>Bu sayfa GitHub Pages üzerinde statik HTML/CSS ile hazırlanmıştır.</span>
+    </footer>
+  </div>
+
+  <script>
+    // Yıl bilgisini otomatik koysun
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
