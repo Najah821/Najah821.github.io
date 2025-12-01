@@ -7,17 +7,18 @@
 
   <style>
     :root {
-      --bg: #0f172a;
-      --bg-soft: #020617;
+      --bg: #020617;
+      --bg-elevated: #0b1220;
+      --bg-soft: #111827;
       --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.15);
+      --accent-soft: rgba(56, 189, 248, 0.16);
+      --accent-strong: #0ea5e9;
       --text: #e5e7eb;
       --muted: #9ca3af;
-      --card: #020617ee;
-      --border: rgba(148, 163, 184, 0.2);
+      --border: rgba(148, 163, 184, 0.3);
       --radius-lg: 18px;
       --radius-xl: 24px;
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
+      --shadow-soft: 0 20px 50px rgba(15, 23, 42, 0.9);
     }
 
     * {
@@ -29,177 +30,295 @@
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         sans-serif;
-      background: radial-gradient(circle at top, #1e293b, #020617 55%);
+      background: radial-gradient(circle at top, #1e293b 0, #020617 55%);
       color: var(--text);
       min-height: 100vh;
+      padding: 28px 16px;
       display: flex;
       justify-content: center;
-      padding: 32px 16px;
+      align-items: stretch;
     }
 
-    .page {
+    .shell {
       width: 100%;
-      max-width: 960px;
-      background: linear-gradient(135deg, #020617, #020617dd);
+      max-width: 1120px;
+      background: radial-gradient(circle at top left, #1d283a, #020617);
       border-radius: var(--radius-xl);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(148, 163, 184, 0.25);
       box-shadow: var(--shadow-soft);
-      padding: 28px 22px 26px;
-      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
       overflow: hidden;
+      position: relative;
+      isolation: isolate;
     }
 
-    /* Dekoratif blur daire */
-    .page::before {
+    /* Dekoratif gradient şerit */
+    .shell::before {
       content: "";
       position: absolute;
-      inset: -120px;
-      background: radial-gradient(circle at top right,
-        rgba(56, 189, 248, 0.18),
-        transparent 60%);
-      opacity: 0.9;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(56, 189, 248, 0.3),
+        transparent 45%,
+        rgba(129, 140, 248, 0.35),
+        transparent 80%
+      );
+      opacity: 0.3;
+      mix-blend-mode: soft-light;
       pointer-events: none;
       z-index: -1;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand-logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9 40%, #0369a1);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
-    }
-
-    .brand-text h1 {
-      font-size: 1.25rem;
-      letter-spacing: 0.03em;
-    }
-
-    .brand-text span {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    .tag {
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      color: var(--muted);
-      backdrop-filter: blur(12px);
-      background: rgba(15, 23, 42, 0.7);
-      white-space: nowrap;
-    }
-
-    main {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
-      gap: 24px;
-      align-items: flex-start;
-    }
-
-    @media (max-width: 768px) {
-      main {
+    @media (max-width: 880px) {
+      .shell {
         grid-template-columns: minmax(0, 1fr);
       }
     }
 
-    .intro {
-      padding-right: 12px;
+    /* SOL SÜTUN (profil) */
+    .sidebar {
+      background: radial-gradient(circle at top, #020617, #020617);
+      border-right: 1px solid rgba(148, 163, 184, 0.2);
+      padding: 22px 20px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
     }
 
-    .intro h2 {
-      font-size: 1.1rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      margin-bottom: 6px;
+    @media (max-width: 880px) {
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      }
+    }
+
+    .brand-block {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar-orbit {
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9 40%, #1d4ed8 90%);
+      position: relative;
+      box-shadow:
+        0 0 0 4px rgba(56, 189, 248, 0.2),
+        0 0 30px rgba(56, 189, 248, 0.5);
+      overflow: hidden;
+    }
+
+    .avatar-orbit::after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: inherit;
+      border: 1px solid rgba(15, 23, 42, 0.3);
+      box-shadow: 0 0 20px rgba(15, 23, 42, 0.7) inset;
+    }
+
+    .brand-title h1 {
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-title span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+    }
+
+    .role-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--muted);
+      margin-top: 4px;
+      backdrop-filter: blur(10px);
+    }
+
+    .intro-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .intro-text strong {
+      color: var(--accent-strong);
       font-weight: 600;
     }
 
-    .intro h3 {
-      font-size: 1.6rem;
-      margin-bottom: 10px;
-    }
-
-    .intro p {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: var(--muted);
-    }
-
-    .intro p + p {
-      margin-top: 8px;
-    }
-
-    .projects-card {
-      background: radial-gradient(circle at top left, var(--accent-soft), #020617f5);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      padding: 16px 16px 14px;
-    }
-
-    .projects-card-header {
+    .pill-row {
+      margin-top: 14px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      gap: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .projects-card-header h3 {
-      font-size: 1.05rem;
-    }
-
-    .projects-count {
-      font-size: 0.8rem;
+    .pill {
+      font-size: 0.75rem;
+      border-radius: 999px;
+      padding: 5px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
       color: var(--muted);
+      background: rgba(15, 23, 42, 0.9);
     }
 
-    .project-list {
-      display: grid;
-      gap: 10px;
+    .pill-accent {
+      border-color: rgba(56, 189, 248, 0.7);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .sidebar-footer {
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.3);
+      padding-top: 10px;
       margin-top: 6px;
     }
 
-    .project-link {
-      display: block;
+    .sidebar-footer span.highlight {
+      color: var(--accent);
+    }
+
+    /* SAĞ SÜTUN (projeler) */
+    .content {
+      padding: 22px 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 10px;
+      margin-bottom: 2px;
+    }
+
+    .content-header-left h2 {
+      font-size: 0.85rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .content-header-left h3 {
+      font-size: 1.45rem;
+    }
+
+    .content-header-left p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .project-counter {
+      font-size: 0.8rem;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .counter-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
+    }
+
+    .projects-list {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, var(--accent-soft), #020617);
+      border: 1px solid var(--border);
+      padding: 13px 14px 12px;
       text-decoration: none;
       color: inherit;
-      background: var(--card);
-      border-radius: 14px;
-      padding: 12px 13px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.7);
-      transition: transform 0.18s ease, box-shadow 0.18s ease,
-        border-color 0.18s ease, background 0.18s ease;
+      display: block;
+      transition:
+        transform 0.16s ease,
+        box-shadow 0.16s ease,
+        border-color 0.16s ease,
+        background 0.16s ease;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.85);
     }
 
-    .project-link:hover {
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(
+        circle at top right,
+        rgba(56, 189, 248, 0.4),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+    }
+
+    .project-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.9);
-      border-color: rgba(56, 189, 248, 0.75);
-      background: linear-gradient(135deg, #020617, rgba(15, 23, 42, 0.96));
+      box-shadow: 0 18px 38px rgba(15, 23, 42, 0.95);
+      border-color: rgba(56, 189, 248, 0.8);
+      background: radial-gradient(circle at top left, #020617, #020617);
     }
 
-    .project-title-row {
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-top-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -208,138 +327,217 @@
     }
 
     .project-title {
+      font-size: 1rem;
       font-weight: 600;
-      font-size: 0.98rem;
     }
 
-    .project-pill {
-      font-size: 0.72rem;
+    .project-tags {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .project-chip {
+      font-size: 0.7rem;
       padding: 3px 8px;
       border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .project-chip-accent {
+      border-color: rgba(56, 189, 248, 0.8);
       color: var(--accent);
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.95);
     }
 
     .project-desc {
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       color: var(--muted);
+      line-height: 1.55;
       margin-bottom: 6px;
+      margin-top: 2px;
     }
 
-    .project-meta {
+    .project-meta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px 10px;
-      font-size: 0.75rem;
+      gap: 8px 12px;
+      font-size: 0.78rem;
       color: var(--muted);
-      opacity: 0.9;
+      align-items: center;
     }
 
-    .dot {
+    .meta-dot {
       width: 4px;
       height: 4px;
       border-radius: 999px;
-      background: rgba(148, 163, 184, 0.7);
-      display: inline-block;
-      margin: 0 4px;
+      background: rgba(148, 163, 184, 0.75);
     }
 
-    footer {
-      margin-top: 18px;
-      font-size: 0.75rem;
+    .meta-link {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+      color: var(--accent);
+    }
+
+    .content-footer {
+      margin-top: 16px;
+      font-size: 0.76rem;
       color: var(--muted);
       display: flex;
       justify-content: space-between;
-      gap: 10px;
-      border-top: 1px solid rgba(148, 163, 184, 0.15);
-      padding-top: 10px;
+      gap: 8px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.25);
+      padding-top: 8px;
     }
 
-    @media (max-width: 600px) {
-      .page {
-        padding: 22px 16px 18px;
+    @media (max-width: 620px) {
+      body {
+        padding: 18px 10px;
       }
-      header {
-        flex-direction: column;
-        align-items: flex-start;
+      .content {
+        padding: 18px 16px 14px;
       }
-      .intro h3 {
-        font-size: 1.42rem;
+      .sidebar {
+        padding: 18px 16px 14px;
+      }
+      .brand-title h1 {
+        font-size: 1.25rem;
+      }
+      .content-header-left h3 {
+        font-size: 1.32rem;
+      }
+      .project-card {
+        padding: 12px 12px 10px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div class="brand">
-        <div class="brand-logo"></div>
-        <div class="brand-text">
-          <h1>Najah821</h1>
-          <span>Kişisel GitHub Pages ana sayfası</span>
+  <div class="shell">
+    <!-- SOL: Profil / tanıtım -->
+    <aside class="sidebar">
+      <div class="brand-block">
+        <header class="brand-header">
+          <div class="avatar-orbit"></div>
+          <div class="brand-title">
+            <h1>Najah821</h1>
+            <span>
+              <span class="status-dot"></span>
+              GitHub Pages · aktif
+            </span>
+          </div>
+        </header>
+
+        <div>
+          <div class="role-chip">
+            Kişisel proje alanı · Öğrenci projeleri
+          </div>
+          <p class="intro-text">
+            Bu sayfa, derslerde geliştirdiğim projeleri bir arada
+            göstermek için hazırlandı. Özellikle
+            <strong>İleri Programlama</strong> dersiyle başlayan
+            Java &amp; Swing tabanlı uygulamaları burada
+            topluyorum.
+          </p>
+
+          <div class="pill-row">
+            <span class="pill pill-accent">Java &amp; Swing</span>
+            <span class="pill">Ders projeleri</span>
+            <span class="pill">GitHub Pages</span>
+          </div>
         </div>
       </div>
 
-    </header>
+      <div class="sidebar-footer">
+        <span>Buradaki listeyi zamanla genişleteceğim.</span>
+        <span>© <span id="year"></span> <span class="highlight">Najah821</span></span>
+      </div>
+    </aside>
 
-    <main>
-      <section class="intro">
-        <h2>Hoş geldiniz</h2>
-        <h3>Projelerimi tek yerden topluyorum.</h3>
-        <p>
-          Bu sayfa, derslerde yaptığım ve zamanla geliştireceğim projeleri
-          kısaca göstermek için hazırlandı. Her proje için kısa bir açıklama
-          ve GitHub Pages bağlantısı bulunacak.
-        </p>
-        <p>
-          Şimdilik yalnızca <strong>İleri Programlama</strong> dersi projesi var;
-          ileride yeni projeler eklendikçe buradaki listeyi genişleteceğim.
-        </p>
+    <!-- SAĞ: Proje listesi -->
+    <main class="content">
+      <div class="content-header">
+        <div class="content-header-left">
+          <h2>Projeler</h2>
+          <h3>Üzerinde çalıştığım küçük uygulamalar.</h3>
+          <p>Her kart, kısa açıklama ve canlı önizleme bağlantısı içerir.</p>
+        </div>
+        <div class="content-header-right">
+          <div class="project-counter">
+            <span class="counter-dot"></span>
+            <span>1 aktif proje</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="projects-list" aria-label="Projeler listesi">
+        <!-- PROJE 1: İleri Programlama -->
+        <a class="project-card" href="/ileri-programlama-proje/">
+          <div class="project-top-row">
+            <span class="project-title">İleri Programlama Projesi</span>
+            <div class="project-tags">
+              <span class="project-chip-accent">Ders Projesi</span>
+              <span class="project-chip">Java · Swing</span>
+            </div>
+          </div>
+
+          <p class="project-desc">
+            İleri Programlama dersi kapsamında geliştirdiğim Java/Swing tabanlı
+            bir uygulama. Temel hedef; çok katmanlı yapı, olay tabanlı arayüz
+            yönetimi ve temiz kod pratiklerini kullanarak küçük ama düzenli bir
+            masaüstü proje ortaya koymak.
+          </p>
+
+          <div class="project-meta-row">
+            <span>İleri Programlama dersi</span>
+            <span class="meta-dot"></span>
+            <span>GitHub Pages üzerinden yayınlandı</span>
+            <span class="meta-dot"></span>
+            <span class="meta-link">Canlı önizleme</span>
+          </div>
+        </a>
+
+        <!-- Yeni projeler için kopyalayabileceğin şablon -->
+        <!--
+        <a class="project-card" href="/yeni-proje-url/">
+          <div class="project-top-row">
+            <span class="project-title">Proje adı</span>
+            <div class="project-tags">
+              <span class="project-chip-accent">Kategori</span>
+              <span class="project-chip">Teknolojiler</span>
+            </div>
+          </div>
+
+          <p class="project-desc">
+            Projeyi 2–3 cümleyle kısaca özetleyen açıklama metni.
+          </p>
+
+          <div class="project-meta-row">
+            <span>Ders / kişisel proje bilgisi</span>
+            <span class="meta-dot"></span>
+            <span>GitHub Pages üzerinden yayınlandı</span>
+          </div>
+        </a>
+        -->
       </section>
 
-      <section class="projects-card" aria-labelledby="projects-title">
-        <div class="projects-card-header">
-          <h3 id="projects-title">Projeler</h3>
-          <span class="projects-count">1 aktif proje</span>
-        </div>
-
-        <div class="project-list">
-          <!-- İleri Programlama Projesi -->
-          <a class="project-link" href="/ileri-programlama-proje/">
-            <div class="project-title-row">
-              <span class="project-title">İleri Programlama Projesi</span>
-              <span class="project-pill">Ders Projesi</span>
-            </div>
-            <p class="project-desc">
-
-
-
-
-
-
-              
-            </p>
-            <div class="project-meta">
-              <span>Java · Swing</span>
-              <span class="dot"></span>
-              <span>İleri Programlama dersi</span>
-              <span class="dot"></span>
-              <span>GitHub Pages üzerinden yayınlandı</span>
-            </div>
-          </a>
-
-          <!-- İleride yeni kartlar eklemek için burayı kopyalayıp düzenleyebilirsin -->
-        </div>
-      </section>
+      <footer class="content-footer">
+        <span>Yeni projeler eklendikçe bu liste güncellenecek.</span>
+        <span>Son güncelleme: <span id="year-update"></span></span>
+      </footer>
     </main>
-
-
   </div>
 
   <script>
-    // Yıl bilgisini otomatik koysun
-    document.getElementById("year").textContent = new Date().getFullYear();
+    const year = new Date().getFullYear();
+    document.getElementById("year").textContent = year;
+    document.getElementById("year-update").textContent = year;
   </script>
 </body>
 </html>
