@@ -6,41 +6,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #eef2f7; /* daha açık ve temiz */
-      color: #222;
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #020617;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --card: #020617ee;
+      --border: rgba(148, 163, 184, 0.2);
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    .container {
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #1e293b, #020617 55%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .page {
       width: 100%;
-      max-width: 900px;
-      margin: 35px auto;
-      padding: 25px;
-      background: #ffffff;
-      border: 1px solid #d9e1ee;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      max-width: 960px;
+      background: linear-gradient(135deg, #020617, #020617dd);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 22px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Dekoratif blur daire */
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: -120px;
+      background: radial-gradient(circle at top right,
+        rgba(56, 189, 248, 0.18),
+        transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -1;
     }
 
     header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 22px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #d9e1ee;
-    }
-
-    /* LOGO hafif renkli */
-    .brand-logo {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #9dc7ff, #7fb6ff);
-      border: 1px solid #8ab7ff;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
     }
 
     .brand {
@@ -49,201 +76,255 @@
       gap: 12px;
     }
 
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9 40%, #0369a1);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+    }
+
     .brand-text h1 {
-      margin: 0;
-      font-size: 1.35rem;
-      font-weight: bold;
-      color: #244d9e;
+      font-size: 1.25rem;
+      letter-spacing: 0.03em;
     }
 
     .brand-text span {
-      font-size: 0.85rem;
-      color: #5873a0;
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .tag {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: var(--muted);
+      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.7);
+      white-space: nowrap;
     }
 
     main {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 25px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 24px;
+      align-items: flex-start;
     }
 
     @media (max-width: 768px) {
       main {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
     }
 
-    /* SOL TARAF */
+    .intro {
+      padding-right: 12px;
+    }
+
     .intro h2 {
-      font-size: 0.9rem;
-      color: #607aa3;
+      font-size: 1.1rem;
+      color: var(--accent);
       text-transform: uppercase;
-      letter-spacing: 1.4px;
+      letter-spacing: 0.16em;
       margin-bottom: 6px;
+      font-weight: 600;
     }
 
     .intro h3 {
-      font-size: 1.55rem;
-      color: #1f3f7f;
+      font-size: 1.6rem;
       margin-bottom: 10px;
     }
 
     .intro p {
-      font-size: 0.96rem;
+      font-size: 0.95rem;
       line-height: 1.6;
-      color: #445774;
-      margin-bottom: 12px;
+      color: var(--muted);
     }
 
-    /* PROJELER KARTI */
+    .intro p + p {
+      margin-top: 8px;
+    }
+
     .projects-card {
-      padding: 17px;
-      border: 1px solid #d7e3f5;
-      border-radius: 10px;
-      background: #f7faff; /* çok hafif mavi ton */
+      background: radial-gradient(circle at top left, var(--accent-soft), #020617f5);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 16px 16px 14px;
     }
 
     .projects-card-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 12px;
     }
 
     .projects-card-header h3 {
-      margin: 0;
-      font-size: 1.1rem;
-      color: #244d9e;
+      font-size: 1.05rem;
     }
 
     .projects-count {
-      font-size: 0.85rem;
-      color: #6c87b2;
+      font-size: 0.8rem;
+      color: var(--muted);
     }
 
     .project-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
     }
 
     .project-link {
       display: block;
       text-decoration: none;
-      color: #1f2d40;
-      background: #ffffff;
-      border-radius: 10px;
-      border: 1px solid #d2dcea;
-      padding: 12px;
-      transition: 0.15s ease;
+      color: inherit;
+      background: var(--card);
+      border-radius: 14px;
+      padding: 12px 13px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.7);
+      transition: transform 0.18s ease, box-shadow 0.18s ease,
+        border-color 0.18s ease, background 0.18s ease;
     }
 
     .project-link:hover {
-      border-color: #7faeff;
-      background: #f2f6ff;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.9);
+      border-color: rgba(56, 189, 248, 0.75);
+      background: linear-gradient(135deg, #020617, rgba(15, 23, 42, 0.96));
     }
 
     .project-title-row {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 5px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
     }
 
     .project-title {
-      font-weight: bold;
-      color: #1a3f8c;
+      font-weight: 600;
+      font-size: 0.98rem;
     }
 
-    /* Etiket */
     .project-pill {
       font-size: 0.72rem;
       padding: 3px 8px;
-      border-radius: 12px;
-      background: #e1ecff;
-      border: 1px solid #aac8ff;
-      color: #1f4fa8;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.75);
+      color: var(--accent);
+      background: rgba(15, 23, 42, 0.8);
     }
 
     .project-desc {
-      font-size: 0.9rem;
-      color: #4b5b72;
-      margin-bottom: 8px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 6px;
     }
 
     .project-meta {
-      font-size: 0.83rem;
-      color: #6b7b93;
       display: flex;
-      gap: 12px;
       flex-wrap: wrap;
+      gap: 6px 10px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.7);
+      display: inline-block;
+      margin: 0 4px;
     }
 
     footer {
-      text-align: center;
-      margin-top: 25px;
-      font-size: 0.85rem;
-      color: #5873a0;
-      padding-top: 15px;
-      border-top: 1px solid #d9e1ee;
+      margin-top: 18px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border-top: 1px solid rgba(148, 163, 184, 0.15);
+      padding-top: 10px;
     }
 
+    @media (max-width: 600px) {
+      .page {
+        padding: 22px 16px 18px;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .intro h3 {
+        font-size: 1.42rem;
+      }
+    }
   </style>
 </head>
-
 <body>
-  <div class="container">
+  <div class="page">
     <header>
       <div class="brand">
         <div class="brand-logo"></div>
         <div class="brand-text">
           <h1>Najah KASSAR</h1>
-          <span>Kişisel GitHub Pages</span>
+          <span>GitHub Pages ana sayfası</span>
         </div>
       </div>
+
     </header>
 
     <main>
       <section class="intro">
         <h2>Hoş geldiniz</h2>
-        <h3>Projelerimi burada topluyorum</h3>
+        <h3>Projelerimi tek yerden topluyorum.</h3>
         <p>
-          Burada üniversite derslerinde geliştirdiğim projeleri kısa açıklamalarla birlikte paylaşıyorum.
+          Bu sayfa, derslerde yaptığım ve zamanla geliştireceğim projeleri
+          kısaca göstermek için hazırlandı. Her proje için kısa bir açıklama
+          ve GitHub Pages bağlantısı bulunacak.
         </p>
         <p>
-          Şimdilik yalnızca <strong>İleri Programlama</strong> dersi projesi yer alıyor.
+          Şimdilik yalnızca <strong>İleri Programlama</strong> dersi projesi var;
+          ileride yeni projeler eklendikçe buradaki listeyi genişleteceğim.
         </p>
       </section>
 
-      <section class="projects-card">
+      <section class="projects-card" aria-labelledby="projects-title">
         <div class="projects-card-header">
-          <h3>Projeler</h3>
+          <h3 id="projects-title">Projeler</h3>
           <span class="projects-count">1 aktif proje</span>
         </div>
 
         <div class="project-list">
+          <!-- İleri Programlama Projesi -->
           <a class="project-link" href="/ileri-programlama-proje/">
             <div class="project-title-row">
               <span class="project-title">İleri Programlama Projesi</span>
               <span class="project-pill">Ders Projesi</span>
             </div>
-            <p class="project-desc">Java Swing ile geliştirilmiş masaüstü uygulaması.</p>
+            <p class="project-desc">
 
+              
+            </p>
             <div class="project-meta">
-              <span>Java · Swing</span>
-              <span>GitHub Pages</span>
+            
+              
             </div>
           </a>
+
+          <!-- İleride yeni kartarı burda ekleyebilirm  -->
         </div>
       </section>
     </main>
-
-    <footer>
-      © <span id="year"></span> Najah821
-    </footer>
   </div>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-
 </body>
 </html>
